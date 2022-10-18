@@ -1,0 +1,28 @@
+{
+  "properties" : {
+    "id" : {
+      "type" : "keyword"
+    },
+    "keyword" : {
+      "type" : "text",
+      "analyzer" : "korean"
+    },
+    "stock_code" : {
+      "type" : "keyword"
+    },
+      "data" : {
+        "properties" : {
+          "item_id": {
+            "type" : "keyword"
+          },
+          "text": {
+            "type" : "text",
+            "analyzer" : "korean"
+          },
+          "publishDate": {
+            "type" : "keyword"
+          }
+        }
+      }
+    }
+}

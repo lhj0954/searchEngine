@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <tr th:each="dart : ${darts}">
+        <div class="card m-2">
+            <div class="card-body">
+                <h4 class="card-title">
+                    <td th:text="${dart.title}"></td>
+                </h4>
+            </div>
+        </div>
+    </tr>
+</div>
+</body>
+</html>

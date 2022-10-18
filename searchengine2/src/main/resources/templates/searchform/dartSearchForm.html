@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>테마주</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Ninth navbar example"
+        th:replace="layout/header :: header"></nav>
+
+
+    <!-- 검색엔진 -->
+
+    <br>
+    <br>
+    <div class="container">
+        <div> 전체 검색 결과 : <span th:text="${darts.totalElements}"></span></div>
+        <br>
+        <form class="row g-3 d-flex justify-content-end" method="GET" th:action="@{/searchform/dartSearchForm}">
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" class="form-control" id="search" name="search" th:value="${param.search}">
+                <button type="submit" class="btn btn-outline-secondary mb-2">Search</button>
+            </div>
+        </form>
+        <br>
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Stock_code</th>
+                    <th scope="col">회사명</th>
+                    <th scope="col">발행일</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="dart : ${darts}">
+                    <td th:text="${dart.stock_code}"></td>
+                    <td><a th:text="${dart.keyword}" th:href="@{'/contentform/dartContentForm/' + ${dart.id}}"></a></td>
+                    <td th:text="${dart.data.publishDate}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${1 == darts.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link"
+                        th:href="@{/searchform/dartSearchForm(page=${darts.pageable.pageNumber - 1})}">Previous</a>
+                </li>
+                <li class="page-item" th:classappend="${i == darts.pageable.pageNumber + 1} ? 'disabled'"
+                    th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                    <a class="page-link" href="#" th:href="@{/searchform/dartSearchForm(page=${i - 1})}"
+                        th:text="${i}">1</a>
+                </li>
+                <li class="page-item"
+                    th:classappend="${darts.totalPages == darts.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" href="#"
+                        th:href="@{/searchform/dartSearchForm(page=${darts.pageable.pageNumber + 1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <div class="b-example-divider" th:replace="layout/footer :: footer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+        integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
